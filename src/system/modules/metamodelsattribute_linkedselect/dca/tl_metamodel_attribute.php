@@ -30,7 +30,7 @@ $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_table'] = array
 	'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_table'],
 	'exclude'               => true,
 	'inputType'             => 'select',
-	'options_callback'      => array('TableMetaModelsAttributeLinkedTags', 'getMMNames'),
+	'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getMMNames'),
 	'eval'                  => array
 	(
 		'includeBlankOption' => true,
@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_sorting'] = array
     'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_sorting'],
     'exclude'               => true,
     'inputType'             => 'select',
-    'options_callback'      => array('TableMetaModelsAttributeLinkedTags', 'getColumnNames'),
+    'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getColumnNames'),
     'eval'                  => array
     (
         'includeBlankOption' => true,
@@ -64,7 +64,7 @@ $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_displayedValue'] = ar
 	'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_displayedValue'],
 	'exclude'               => true,
 	'inputType'             => 'select',
-	'options_callback'      => array('TableMetaModelsAttributeLinkedTags', 'getColumnNames'),
+	'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getColumnNames'),
 	'eval'                  => array
 	(
 		'includeBlankOption' => true,
@@ -81,10 +81,10 @@ $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_filter'] = array
 	'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_filterSql'],
 	'exclude'               => true,
 	'inputType'             => 'select',
-	'options_callback'      => array('TableMetaModelsAttributeLinkedTags', 'getFilters'),
+	'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getFilters'),
 	'eval'                  => array
 	(
-		'includeBlankOption' => true,		
+		'includeBlankOption' => true,
 		'alwaysSave' => true,
 		'submitOnChange'=> true,
 		'tl_class' => 'w50',

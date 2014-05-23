@@ -21,15 +21,14 @@
  */
 ClassLoader::addClasses(array
 (
-	'MetaModelAttributeLinkedSelect'              => 'system/modules/metamodelsattribute_linkedselect/MetaModelAttributeLinkedSelect.php',
-	'TableMetaModelsAttributeLinkedSelect'        => 'system/modules/metamodelsattribute_linkedselect/TableMetaModelsAttributeLinkedSelect.php',
+    'MetaModels\Attribute\Select\LinkedSelect' => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/Select/LinkedSelect.php',
+    'MetaModels\Dca\AttributeLinkedSelect'     => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Dca/AttributeLinkedSelect.php',
 ));
-
 
 /**
  * Register the templates
  */
 TemplateLoader::addFiles(array
 (
-	'mm_attr_linkedselect'              => 'system/modules/metamodelsattribute_linkedselect/templates',
+    'mm_attr_linkedselect' => 'system/modules/metamodelsattribute_linkedselect/templates',
 ));

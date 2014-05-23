@@ -14,7 +14,10 @@
  * @filesource
  */
 
+namespace MetaModels\Attribute\Select;
+
 use MetaModels\Attribute\AbstractHybrid as MetaModelAttributeHybrid;
+use MetaModels\Filter\Setting\Factory as FilterSettingFactory;
 use MetaModels\Render\Template as MetaModelTemplate;
 use MetaModels\Factory as MetaModelFactory;
 
@@ -24,7 +27,7 @@ use MetaModels\Factory as MetaModelFactory;
  * @package    MetaModels
  * @subpackage AttributeTags
  */
-class MetaModelAttributeLinkedSelect extends MetaModelAttributeHybrid
+class LinkedSelect extends MetaModelAttributeHybrid
 {
 
 	/**
@@ -156,7 +159,7 @@ class MetaModelAttributeLinkedSelect extends MetaModelAttributeHybrid
 			$objFilter		 = $objMetaModel->getEmptyFilter();
 
 			// Set Filter and co.
-			$objFilterSettings = MetaModelFilterSettingsFactory::byId($intFilterId);
+			$objFilterSettings = FilterSettingFactory::byId($intFilterId);
 			if ($objFilterSettings)
 			{
 				$arrValues			 = $_GET;
@@ -260,7 +263,7 @@ class MetaModelAttributeLinkedSelect extends MetaModelAttributeHybrid
 					implode(',', array_map('intval', $arrIds)) // 3
 				);
 			
-			$objResult = Database::getInstance()->prepare($strQuery)->execute();
+			$objResult = \Database::getInstance()->prepare($strQuery)->execute();
 
 			while ($objResult->next())
 			{
@@ -296,7 +299,7 @@ class MetaModelAttributeLinkedSelect extends MetaModelAttributeHybrid
                                     $this->getColName() // 2
             );
 
-            $objDB = Database::getInstance();
+            $objDB = \Database::getInstance();
             foreach ($arrValues as $intItemId => $arrValue)
             {
                 if (is_array($arrValue) && array_key_exists('id', $arrValue))
@@ -325,7 +328,7 @@ class MetaModelAttributeLinkedSelect extends MetaModelAttributeHybrid
 		{
 			$strQuery = sprintf('UPDATE %1$s SET %2$s=0 WHERE %1$s.id IN (%3$s)', $this->getMetaModel()->getTableName(), $this->getColName(), implode(',', $arrIds)
 			);
-			Database::getInstance()->execute($strQuery);
+			\Database::getInstance()->execute($strQuery);
 		}
 	}
 

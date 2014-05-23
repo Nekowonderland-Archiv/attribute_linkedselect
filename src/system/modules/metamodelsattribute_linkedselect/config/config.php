@@ -16,6 +16,6 @@
 
 $GLOBALS['METAMODELS']['attributes']['linkedselect'] = array
 (
-	'class' => 'MetaModelAttributeLinkedSelect',
+	'class' => 'MetaModels\Attribute\Select\LinkedSelect',
 	'image' => 'system/modules/metamodelsattribute_linkedselect/html/select.png'
 );

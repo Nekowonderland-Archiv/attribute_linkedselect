@@ -14,13 +14,17 @@
  * @filesource
  */
 
+namespace MetaModels\Dca;
+
+use MetaModels\Factory;
+
 /**
  * Supplementary class for handling DCA information for select attributes.
  *
  * @package	   MetaModels
  * @subpackage AttributeTags
  */
-class TableMetaModelsAttributeLinkedSelect extends TableMetaModelAttribute
+class AttributeLinkedSelect
 {
 
 	/**
