@@ -69,14 +69,21 @@ class AttributeLinkedSelect
 		return $arrRetrun;
 	}
 
+    /**
+     * @param DcGeneral\DC_General $objDC
+     *
+     * @return array
+     */
 	public function getColumnNames(DataContainer $objDC)
 	{
 		$arrRetrun = array();
 		$arrMMTables = MetaModelFactory::getAllTables();
+        $objModel    = $objDC->getEnvironment()->getCurrentModel();
 
-		if (($objDC->getCurrentModel()) && in_array($objDC->getCurrentModel()->getProperty('mm_table'), $arrMMTables))
-		{
-			$objMM = MetaModelFactory::byTableName($objDC->getCurrentModel()->getProperty('mm_table'));
+
+        if (($objModel) && in_array($objModel->getProperty('mm_table'), $arrMMTables))
+        {
+            $objMM = Factory::byTableName($objModel->getProperty('mm_table'));
 
 			foreach ($objMM->getAttributes() as $objAttribute)
 			{				
@@ -95,12 +102,13 @@ class AttributeLinkedSelect
 	{
 		$arrRetrun = array();
 		$arrMMTables = MetaModelFactory::getAllTables();
+        $objModel    = $objDC->getEnvironment()->getCurrentModel();
 
-		if (($objDC->getCurrentModel()) && in_array($objDC->getCurrentModel()->getProperty('mm_table'), $arrMMTables))
-		{
-			$objMM = MetaModelFactory::byTableName($objDC->getCurrentModel()->getProperty('mm_table'));
+        if (($objModel) && in_array($objModel->getProperty('mm_table'), $arrMMTables))
+        {
+            $objMM = Factory::byTableName($objModel->getProperty('mm_table'));
 
-			$objFilter = $this->Database
+            $objFilter = \Database::getInstance()
 					->prepare("SELECT id,name FROM tl_metamodel_filter WHERE pid=? ORDER BY name")
 					->execute($objMM->get('id'));
 
