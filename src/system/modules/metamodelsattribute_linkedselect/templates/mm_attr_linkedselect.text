@@ -1,0 +1,3 @@
+<?php
+echo $this->raw[0][$this->attribute->get('mm_displayedValue')];
+?>
