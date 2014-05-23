@@ -21,63 +21,62 @@ use MetaModels\Factory;
 /**
  * Supplementary class for handling DCA information for select attributes.
  *
- * @package	   MetaModels
- * @subpackage AttributeTags
+ * @package       MetaModels
+ * @subpackage    AttributeTags
  */
 class AttributeLinkedSelect
 {
 
-	/**
-	 * @var TableMetaModelsAttributeLinkedTags
-	 */
-	protected static $objInstance = null;
+    /**
+     * @var TableMetaModelsAttributeLinkedTags
+     */
+    protected static $objInstance = null;
 
-	/**
-	 * Get the static instance.
-	 *
-	 * @static
-	 * @return TableMetaModelsAttributeLinkedTags
-	 */
-	public static function getInstance()
-	{
-		if (self::$objInstance == null)
-		{
-			self::$objInstance = new self();
-		}
-		return self::$objInstance;
-	}
+    /**
+     * Get the static instance.
+     *
+     * @static
+     * @return TableMetaModelsAttributeLinkedTags
+     */
+    public static function getInstance()
+    {
+        if (self::$objInstance == null)
+        {
+            self::$objInstance = new self();
+        }
+        return self::$objInstance;
+    }
 
-	public function getMMNames()
-	{
-		$arrRetrun = array();
-		$arrTables = MetaModelFactory::getAllTables();
+    public function getMMNames()
+    {
+        $arrRetrun = array();
+        $arrTables = Factory::getAllTables();
 
-		foreach ($arrTables as $strMMName)
-		{
-			$objMM = MetaModelFactory::byTableName($strMMName);
-			if ($objMM->isTranslated())
-			{
-				$arrRetrun['Translated'][$strMMName] = sprintf('%s (%s)', $objMM->get('name'), $strMMName);
-			}
-			else
-			{
-				$arrRetrun['None Translated'][$strMMName] = sprintf('%s (%s)', $objMM->get('name'), $strMMName);
-				;
-			}
-		}
+        foreach ($arrTables as $strMMName)
+        {
+            $objMM = Factory::byTableName($strMMName);
+            if ($objMM->isTranslated())
+            {
+                $arrRetrun['Translated'][$strMMName] = sprintf('%s (%s)', $objMM->get('name'), $strMMName);
+            }
+            else
+            {
+                $arrRetrun['None Translated'][$strMMName] = sprintf('%s (%s)', $objMM->get('name'), $strMMName);;
+            }
+        }
 
-		return $arrRetrun;
-	}
+        return $arrRetrun;
+    }
 
     /**
      * @param DcGeneral\DC_General $objDC
      *
      * @return array
      */
-	public function getColumnNames(DataContainer $objDC)
-	{
-		$arrRetrun = array();
-		$arrMMTables = MetaModelFactory::getAllTables();
+    public function getColumnNames($objDC)
+    {
+        $arrRetrun   = array();
+        $arrMMTables = Factory::getAllTables();
         $objModel    = $objDC->getEnvironment()->getCurrentModel();
 
 
@@ -85,23 +84,29 @@ class AttributeLinkedSelect
         {
             $objMM = Factory::byTableName($objModel->getProperty('mm_table'));
 
-			foreach ($objMM->getAttributes() as $objAttribute)
-			{				
-				$strName = $objAttribute->getName();
-				$strColumn = $objAttribute->getColName();
-				$strType = $objAttribute->get('type');
+            foreach ($objMM->getAttributes() as $objAttribute)
+            {
+                $strName   = $objAttribute->getName();
+                $strColumn = $objAttribute->getColName();
+                $strType   = $objAttribute->get('type');
 
-				$arrRetrun[$strColumn] = vsprintf("%s (%s - %s)", array($strName, $strColumn, $strType));
-			}
-		}
+                $arrRetrun[$strColumn] = vsprintf("%s (%s - %s)", array($strName, $strColumn, $strType));
+            }
+        }
 
-		return $arrRetrun;
-	}
-	
-	public function getFilters(DataContainer $objDC)
-	{
-		$arrRetrun = array();
-		$arrMMTables = MetaModelFactory::getAllTables();
+        return $arrRetrun;
+    }
+
+
+    /**
+     * @param DcGeneral\DC_General $objDC
+     *
+     * @return array
+     */
+    public function getFilters($objDC)
+    {
+        $arrRetrun   = array();
+        $arrMMTables = Factory::getAllTables();
         $objModel    = $objDC->getEnvironment()->getCurrentModel();
 
         if (($objModel) && in_array($objModel->getProperty('mm_table'), $arrMMTables))
@@ -109,16 +114,16 @@ class AttributeLinkedSelect
             $objMM = Factory::byTableName($objModel->getProperty('mm_table'));
 
             $objFilter = \Database::getInstance()
-					->prepare("SELECT id,name FROM tl_metamodel_filter WHERE pid=? ORDER BY name")
-					->execute($objMM->get('id'));
+                ->prepare("SELECT id,name FROM tl_metamodel_filter WHERE pid=? ORDER BY name")
+                ->execute($objMM->get('id'));
 
-			while ($objFilter->next())
-			{
-				$arrRetrun[$objFilter->id] = $objFilter->name;
-			}
-		}
+            while ($objFilter->next())
+            {
+                $arrRetrun[$objFilter->id] = $objFilter->name;
+            }
+        }
 
-		return $arrRetrun;
-	}
+        return $arrRetrun;
+    }
 
 }
