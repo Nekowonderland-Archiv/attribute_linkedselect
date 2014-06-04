@@ -21,8 +21,8 @@
  */
 ClassLoader::addClasses(array
 (
-    'MetaModels\Attribute\Select\LinkedSelect' => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/Select/LinkedSelect.php',
-    'MetaModels\Dca\AttributeLinkedSelect'     => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Dca/AttributeLinkedSelect.php',
+	'MetaModels\Attribute\Select\LinkedSelect'                                   => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/Select/LinkedSelect.php',
+	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute' => 'system/modules/metamodelsattribute_linkedtags/MetaModels/DcGeneral/Events/Table/Attribute/LinkedSelect/PropertyAttribute.php',
 ));
 
 /**
@@ -30,5 +30,5 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-    'mm_attr_linkedselect' => 'system/modules/metamodelsattribute_linkedselect/templates',
+	'mm_attr_linkedselect' => 'system/modules/metamodelsattribute_linkedselect/templates',
 ));

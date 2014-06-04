@@ -17,95 +17,95 @@
  */
 
 /**
- * Table tl_metamodel_attribute 
+ * Table tl_metamodel_attribute
  */
 
 $GLOBALS['TL_DCA']['tl_metamodel_attribute']['metapalettes']['linkedselect extends _simpleattribute_'] = array
 (
-	'+display' => array('mm_table after description', 'mm_displayedValue', 'mm_retunedValue', 'mm_sorting', 'mm_filter', 'mm_filterparams')
+	'+display' => array('mm_table after description', 'mm_displayedValue', 'mm_sorting', 'mm_filter', 'mm_filterparams')
 );
 
 $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_table'] = array
 (
-	'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_table'],
-	'exclude'               => true,
-	'inputType'             => 'select',
-	'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getMMNames'),
-	'eval'                  => array
+	'label'            => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_table'],
+	'exclude'          => true,
+	'inputType'        => 'select',
+	'options_callback' => array('MetaModels\Dca\AttributeLinkedSelect', 'getMMNames'),
+	'eval'             => array
 	(
 		'includeBlankOption' => true,
-		'doNotSaveEmpty' => true,
-		'alwaysSave' => true,
-		'submitOnChange'=> true,
-		'tl_class' => 'w50',
-		'chosen' => 'true'
+		'doNotSaveEmpty'     => true,
+		'alwaysSave'         => true,
+		'submitOnChange'     => true,
+		'tl_class'           => 'w50',
+		'chosen'             => 'true'
 	),
 );
 
 $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_sorting'] = array
 (
-    'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_sorting'],
-    'exclude'               => true,
-    'inputType'             => 'select',
-    'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getColumnNames'),
-    'eval'                  => array
-    (
-        'includeBlankOption' => true,
-        'doNotSaveEmpty' => true,
-        'alwaysSave' => true,
-        'submitOnChange'=> true,
-        'tl_class' => 'w50',
-        'chosen' => 'true'
-    ),
+	'label'            => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_sorting'],
+	'exclude'          => true,
+	'inputType'        => 'select',
+	'options_callback' => array('MetaModels\Dca\AttributeLinkedSelect', 'getColumnNames'),
+	'eval'             => array
+	(
+		'includeBlankOption' => true,
+		'doNotSaveEmpty'     => true,
+		'alwaysSave'         => true,
+		'submitOnChange'     => true,
+		'tl_class'           => 'w50',
+		'chosen'             => 'true'
+	),
 );
 
 $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_displayedValue'] = array
 (
-	'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_displayedValue'],
-	'exclude'               => true,
-	'inputType'             => 'select',
-	'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getColumnNames'),
-	'eval'                  => array
+	'label'            => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_displayedValue'],
+	'exclude'          => true,
+	'inputType'        => 'select',
+	'options_callback' => array('MetaModels\Dca\AttributeLinkedSelect', 'getColumnNames'),
+	'eval'             => array
 	(
 		'includeBlankOption' => true,
-		'doNotSaveEmpty' => true,
-		'alwaysSave' => true,
-		'submitOnChange'=> true,
-		'tl_class' => 'w50',
-		'chosen' => 'true'
+		'doNotSaveEmpty'     => true,
+		'alwaysSave'         => true,
+		'submitOnChange'     => true,
+		'tl_class'           => 'w50',
+		'chosen'             => 'true'
 	),
 );
 
 $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_filter'] = array
 (
-	'label'                 => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_filterSql'],
-	'exclude'               => true,
-	'inputType'             => 'select',
-	'options_callback'      => array('MetaModels\Dca\AttributeLinkedSelect', 'getFilters'),
-	'eval'                  => array
+	'label'            => &$GLOBALS['TL_LANG']['tl_metamodel_attribute']['mm_filterSql'],
+	'exclude'          => true,
+	'inputType'        => 'select',
+	'options_callback' => array('MetaModels\Dca\AttributeLinkedSelect', 'getFilters'),
+	'eval'             => array
 	(
 		'includeBlankOption' => true,
-		'alwaysSave' => true,
-		'submitOnChange'=> true,
-		'tl_class' => 'w50',
-		'chosen' => 'true'
+		'alwaysSave'         => true,
+		'submitOnChange'     => true,
+		'tl_class'           => 'w50',
+		'chosen'             => 'true'
 	),
 );
 
 $GLOBALS['TL_DCA']['tl_metamodel_attribute']['fields']['mm_filterparams'] = array
+(
+	'label'     => &$GLOBALS['TL_LANG']['tl_content']['mm_filterparams'],
+	'exclude'   => true,
+	'inputType' => 'mm_subdca',
+	'eval'      => array
 	(
-	'label'		 => &$GLOBALS['TL_LANG']['tl_content']['mm_filterparams'],
-	'exclude'	 => true,
-	'inputType'	 => 'mm_subdca',
-	'eval'		 => array
-		(
-		'tl_class'	 => 'clr m12',
+		'tl_class'   => 'clr m12',
 		'flagfields' => array
-			(
+		(
 			'use_get' => array
-				(
-				'label'		 => &$GLOBALS['TL_LANG']['tl_content']['metamodel_filterparams_use_get'],
-				'inputType'	 => 'checkbox'
+			(
+				'label'     => &$GLOBALS['TL_LANG']['tl_content']['metamodel_filterparams_use_get'],
+				'inputType' => 'checkbox'
 			),
 		),
 	)

@@ -19,3 +19,6 @@ $GLOBALS['METAMODELS']['attributes']['linkedselect'] = array
 	'class' => 'MetaModels\Attribute\Select\LinkedSelect',
 	'image' => 'system/modules/metamodelsattribute_linkedselect/html/select.png'
 );
+
+$GLOBALS['TL_EVENTS'][\ContaoCommunityAlliance\Contao\EventDispatcher\Event\CreateEventDispatcherEvent::NAME][] =
+	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute::registerEvents';
