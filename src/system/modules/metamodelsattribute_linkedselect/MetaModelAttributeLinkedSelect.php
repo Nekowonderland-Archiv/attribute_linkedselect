@@ -112,9 +112,16 @@ class MetaModelAttributeLinkedSelect extends MetaModelAttributeHybrid
 			return $arrReturn;
 		}
 
-		foreach ($varValue as $arrItem)
+		foreach ($varValue as $mixItem)
 		{
-			$arrReturn[] = $arrItem['id'];
+			if(is_array($mixItem) && isset($mixItem['id']))
+			{
+				$arrReturn[] = $mixItem['id'];
+			}
+			elseif(!is_array($mixItem))
+			{
+				$arrReturn[] = $mixItem;
+			}
 		}
 
 		return $arrReturn;
