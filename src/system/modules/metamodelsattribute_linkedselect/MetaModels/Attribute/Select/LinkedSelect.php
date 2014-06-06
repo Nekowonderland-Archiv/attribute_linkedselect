@@ -163,6 +163,10 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			}
 
 			$objMetaModel	 = MetaModelFactory::byTableName($strMMName);
+			if($objMetaModel == null)
+			{
+				return $arrReturn;
+			}
 			$objFilter		 = $objMetaModel->getEmptyFilter();
 
 			// Set Filter and co.
