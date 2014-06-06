@@ -22,7 +22,7 @@
 ClassLoader::addClasses(array
 (
 	'MetaModels\Attribute\Select\LinkedSelect'                                   => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/Select/LinkedSelect.php',
-	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute' => 'system/modules/metamodelsattribute_linkedtags/MetaModels/DcGeneral/Events/Table/Attribute/LinkedSelect/PropertyAttribute.php',
+	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute' => 'system/modules/metamodelsattribute_linkedselect/MetaModels/DcGeneral/Events/Table/Attribute/LinkedSelect/PropertyAttribute.php',
 ));
 
 /**
