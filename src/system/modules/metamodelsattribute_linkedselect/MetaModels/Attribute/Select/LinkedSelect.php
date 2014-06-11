@@ -118,11 +118,11 @@ class LinkedSelect extends MetaModelAttributeHybrid
 
 		foreach ($varValue as $mixItem)
 		{
-			if(is_array($mixItem) && isset($mixItem['id']))
+			if (is_array($mixItem) && isset($mixItem['id']))
 			{
 				$arrReturn[] = $mixItem['id'];
 			}
-			elseif(!is_array($mixItem))
+			elseif (!is_array($mixItem))
 			{
 				$arrReturn[] = $mixItem;
 			}
@@ -147,10 +147,10 @@ class LinkedSelect extends MetaModelAttributeHybrid
 	 */
 	public function getFilterOptions($arrIds, $usedOnly, &$arrCount = null)
 	{
-		$strMMName			 = $this->get('mm_table');
-		$strDisplayedValue	 = $this->get('mm_displayedValue');
-		$strSortingValue	 = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
-		$intFilterId		 = $this->get('mm_filter');
+		$strMMName         = $this->get('mm_table');
+		$strDisplayedValue = $this->get('mm_displayedValue');
+		$strSortingValue   = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
+		$intFilterId       = $this->get('mm_filter');
 		$arrFilterParams   = (array) $this->get('mm_filterparams');
 
 		$arrReturn = array();
@@ -160,25 +160,21 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			// Change language.
 			if (TL_MODE == 'BE')
 			{
-				$strCurrentLanguage		 = $GLOBALS['TL_LANGUAGE'];
-				$GLOBALS['TL_LANGUAGE']	 = $this->getMetaModel()->getActiveLanguage();
+				$strCurrentLanguage     = $GLOBALS['TL_LANGUAGE'];
+				$GLOBALS['TL_LANGUAGE'] = $this->getMetaModel()->getActiveLanguage();
 			}
 
-			$objMetaModel	 = MetaModelFactory::byTableName($strMMName);
-			if($objMetaModel == null)
-			{
-				return $arrReturn;
-			}
-			$objFilter		 = $objMetaModel->getEmptyFilter();
+			$objMetaModel = MetaModelFactory::byTableName($strMMName);
+			$objFilter    = $objMetaModel->getEmptyFilter();
 
 			// Set Filter and co.
 			$objFilterSettings = FilterSettingFactory::byId($intFilterId);
 			if ($objFilterSettings)
 			{
-				$arrValues			 = $_GET;
+				$arrValues         = $_GET;
 				$arrPresets        = $arrFilterParams;
-				$arrPresetNames		 = $objFilterSettings->getParameters();
-				$arrFEFilterParams	 = array_keys($objFilterSettings->getParameterFilterNames());
+				$arrPresetNames    = $objFilterSettings->getParameters();
+				$arrFEFilterParams = array_keys($objFilterSettings->getParameterFilterNames());
 
 				$arrProcessed = array();
 
@@ -224,8 +220,8 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			{
 				$arrItem = $objItem->parseValue();
 
-				$strValue	 = $arrItem['text'][$strDisplayedValue];
-				$strAlias	 = $objItem->get('id');
+				$strValue = $arrItem['text'][$strDisplayedValue];
+				$strAlias = $objItem->get('id');
 
 				$arrReturn[$strAlias] = $strValue;
 			}
@@ -260,22 +256,22 @@ class LinkedSelect extends MetaModelAttributeHybrid
 
 	public function getDataFor($arrIds)
 	{
-		$strMMName			 = $this->get('mm_table');
-		$strDisplayedValue	 = $this->get('mm_displayedValue');
-		$arrReturn			 = array();
+		$strMMName         = $this->get('mm_table');
+		$strDisplayedValue = $this->get('mm_displayedValue');
+		$arrReturn         = array();
 
 		// Get data from MM.
 		$objMetaModel = MetaModelFactory::byTableName($strMMName);
-		
+
 		if ($strMMName && $objMetaModel && $strDisplayedValue)
 		{
-			$strColName	 = $this->getColName();
-			$strQuery	 = sprintf('SELECT %2$s, id FROM %1$s WHERE id IN (%3$s)', 
-					$this->getMetaModel()->getTableName(), // 1
-					$strColName, // 2
-					implode(',', array_map('intval', $arrIds)) // 3
-				);
-			
+			$strColName = $this->getColName();
+			$strQuery   = sprintf('SELECT %2$s, id FROM %1$s WHERE id IN (%3$s)',
+				$this->getMetaModel()->getTableName(), // 1
+				$strColName, // 2
+				implode(',', array_map('intval', $arrIds)) // 3
+			);
+
 			$objResult = \Database::getInstance()->prepare($strQuery)->execute();
 
 			while ($objResult->next())
@@ -284,15 +280,15 @@ class LinkedSelect extends MetaModelAttributeHybrid
 
 				if ($objItem)
 				{
-					$mixID		 = $objResult->id;
-					$arrValues	 = $objItem->parseValue();
+					$mixID     = $objResult->id;
+					$arrValues = $objItem->parseValue();
 
 					$arrReturn[$mixID][] = array_merge(array(
-						'id'		 => $arrValues['raw']['id'],
-						'pid'		 => $arrValues['raw']['pid'],
-						'sorting'	 => $arrValues['raw']['sorting'],
-						'tstamp'	 => $arrValues['raw']['tstamp'],
-							), $arrValues['text']);
+						'id'      => $arrValues['raw']['id'],
+						'pid'     => $arrValues['raw']['pid'],
+						'sorting' => $arrValues['raw']['sorting'],
+						'tstamp'  => $arrValues['raw']['tstamp'],
+					), $arrValues['text']);
 				}
 			}
 		}
@@ -301,41 +297,41 @@ class LinkedSelect extends MetaModelAttributeHybrid
 	}
 
 	public function setDataFor($arrValues)
-    {
-        $strMMName         = $this->get('mm_table');
-        $strDisplayedValue = $this->get('mm_displayedValue');
+	{
+		$strMMName         = $this->get('mm_table');
+		$strDisplayedValue = $this->get('mm_displayedValue');
 
-        if ($strMMName && $strDisplayedValue)
-        {
-            $strQuery = sprintf('UPDATE %1$s SET %2$s=? WHERE %1$s.id=?', 
-                                    $this->getMetaModel()->getTableName(), // 1
-                                    $this->getColName() // 2
-            );
+		if ($strMMName && $strDisplayedValue)
+		{
+			$strQuery = sprintf('UPDATE %1$s SET %2$s=? WHERE %1$s.id=?',
+				$this->getMetaModel()->getTableName(), // 1
+				$this->getColName() // 2
+			);
 
-            $objDB = \Database::getInstance();
-            foreach ($arrValues as $intItemId => $arrValue)
-            {
-                if (is_array($arrValue) && array_key_exists('id', $arrValue))
-                {
-                    $objDB->prepare($strQuery)->execute($arrValue['id'], $intItemId);
-                }
-                else if (is_array($arrValue))
-                {
-                    $arrValues = array_values($arrValue);
-                    $objDB->prepare($strQuery)->execute($arrValues[0], $intItemId);
-                }
-                else
-                {
-                    $objDB->prepare($strQuery)->execute($arrValue, $intItemId);
-                }
-            }
-        }
-    }
+			$objDB = \Database::getInstance();
+			foreach ($arrValues as $intItemId => $arrValue)
+			{
+				if (is_array($arrValue) && array_key_exists('id', $arrValue))
+				{
+					$objDB->prepare($strQuery)->execute($arrValue['id'], $intItemId);
+				}
+				else if (is_array($arrValue))
+				{
+					$arrValues = array_values($arrValue);
+					$objDB->prepare($strQuery)->execute($arrValues[0], $intItemId);
+				}
+				else
+				{
+					$objDB->prepare($strQuery)->execute($arrValue, $intItemId);
+				}
+			}
+		}
+	}
 
 	public function unsetDataFor($arrIds)
 	{
-		$strMMName			 = $this->get('mm_table');
-		$strDisplayedValue	 = $this->get('mm_displayedValue');
+		$strMMName         = $this->get('mm_table');
+		$strDisplayedValue = $this->get('mm_displayedValue');
 
 		if ($strMMName && $strDisplayedValue)
 		{
