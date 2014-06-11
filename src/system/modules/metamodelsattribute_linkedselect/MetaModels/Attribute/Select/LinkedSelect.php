@@ -70,6 +70,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			'mm_displayedValue',
 			'mm_sorting',
 			'mm_filter',
+			'mm_filterparams',
 			'select_as_radio',
 			'includeBlankOption',
 			'mandatory',
@@ -150,6 +151,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 		$strDisplayedValue	 = $this->get('mm_displayedValue');
 		$strSortingValue	 = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
 		$intFilterId		 = $this->get('mm_filter');
+		$arrFilterParams   = (array) $this->get('mm_filterparams');
 
 		$arrReturn = array();
 
@@ -174,7 +176,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			if ($objFilterSettings)
 			{
 				$arrValues			 = $_GET;
-				$arrPresets			 = deserialize($this->metamodel_filterparams, true);
+				$arrPresets        = $arrFilterParams;
 				$arrPresetNames		 = $objFilterSettings->getParameters();
 				$arrFEFilterParams	 = array_keys($objFilterSettings->getParameterFilterNames());
 
