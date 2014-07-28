@@ -218,7 +218,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			// Add some more filters.
 			if($arrIds && is_array($arrIds))
 			{
-				$objFilter->addRules(new StaticIdList($arrIds));
+				$objFilter->addFilterRule(new StaticIdList($arrIds));
 			}
 
 			if($usedOnly)
