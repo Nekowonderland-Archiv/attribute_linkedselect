@@ -23,7 +23,7 @@ ClassLoader::addClasses(array
 (
 	'MetaModels\Attribute\Select\LinkedSelect'                                   => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/Select/LinkedSelect.php',
 	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute' => 'system/modules/metamodelsattribute_linkedselect/MetaModels/DcGeneral/Events/Table/Attribute/LinkedSelect/PropertyAttribute.php',
-	'MetaModels\Filter\Rules\FilterRuleLinkedSelect'                             => 'system/modules/metamodelsattribute_linkedtags/MetaModels/Filter/Rules/FilterRuleLinkedSelect.php',
+	'MetaModels\Filter\Rules\FilterRuleLinkedSelect'                             => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Filter/Rules/FilterRuleLinkedSelect.php',
 ));
 
 /**
