@@ -118,11 +118,11 @@ class LinkedSelect extends MetaModelAttributeHybrid
 
 		foreach ($varValue as $mixItem)
 		{
-			if(is_array($mixItem) && isset($mixItem['id']))
+			if (is_array($mixItem) && isset($mixItem['id']))
 			{
 				$arrReturn[] = $mixItem['id'];
 			}
-			elseif(!is_array($mixItem))
+			elseif (!is_array($mixItem))
 			{
 				$arrReturn[] = $mixItem;
 			}
@@ -152,10 +152,11 @@ class LinkedSelect extends MetaModelAttributeHybrid
 		$strSortingValue	 = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
 		$intFilterId		 = $this->get('mm_filter');
 		$arrFilterParams   = (array) $this->get('mm_filterparams');
+		$objMetaModel      = MetaModelFactory::byTableName($strMMName);
 
 		$arrReturn = array();
 
-		if ($strMMName && $strDisplayedValue)
+		if ($strMMName && $objMetaModel && $strDisplayedValue)
 		{
 			// Change language.
 			if (TL_MODE == 'BE')
@@ -163,13 +164,8 @@ class LinkedSelect extends MetaModelAttributeHybrid
 				$strCurrentLanguage		 = $GLOBALS['TL_LANGUAGE'];
 				$GLOBALS['TL_LANGUAGE']	 = $this->getMetaModel()->getActiveLanguage();
 			}
-
-			$objMetaModel	 = MetaModelFactory::byTableName($strMMName);
-			if($objMetaModel == null)
-			{
-				return $arrReturn;
-			}
-			$objFilter		 = $objMetaModel->getEmptyFilter();
+			
+			$objFilter    = $objMetaModel->getEmptyFilter();
 
 			// Set Filter and co.
 			$objFilterSettings = FilterSettingFactory::byId($intFilterId);
