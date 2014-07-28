@@ -19,3 +19,5 @@ $GLOBALS['METAMODELS']['attributes']['linkedselect'] = array
 	'class' => 'MetaModels\Attribute\Select\LinkedSelect',
 	'image' => 'system/modules/metamodelsattribute_linkedselect/html/select.png'
 );
+
+$GLOBALS['METAMODELS']['filters']['select']['attr_filter'][] = 'linkedselect';
