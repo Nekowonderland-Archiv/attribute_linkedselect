@@ -17,6 +17,8 @@
 namespace MetaModels\Attribute\Select;
 
 use MetaModels\Attribute\AbstractHybrid as MetaModelAttributeHybrid;
+use MetaModels\Filter\Rules\FilterRuleLinkedSelect;
+use MetaModels\Filter\Rules\StaticIdList;
 use MetaModels\Filter\Setting\Factory as FilterSettingFactory;
 use MetaModels\Render\Template as MetaModelTemplate;
 use MetaModels\Factory as MetaModelFactory;
@@ -164,7 +166,12 @@ class LinkedSelect extends MetaModelAttributeHybrid
 				$strCurrentLanguage		 = $GLOBALS['TL_LANGUAGE'];
 				$GLOBALS['TL_LANGUAGE']	 = $this->getMetaModel()->getActiveLanguage();
 			}
-			
+
+			if($objMetaModel == null)
+			{
+				return $arrReturn;
+			}
+
 			$objFilter    = $objMetaModel->getEmptyFilter();
 
 			// Set Filter and co.
@@ -208,6 +215,17 @@ class LinkedSelect extends MetaModelAttributeHybrid
 				$objFilterSettings->addRules($objFilter, $arrProcessed);
 			}
 
+			// Add some more filters.
+			if($arrIds && is_array($arrIds))
+			{
+				$objFilter->addRules(new StaticIdList($arrIds));
+			}
+
+			if($usedOnly)
+			{
+				// ToDo: ADD
+			}
+
 			$objItems = $objMetaModel->findByFilter($objFilter, $strSortingValue);
 
 			// Reset language.
@@ -235,10 +253,8 @@ class LinkedSelect extends MetaModelAttributeHybrid
 	 */
 	public function searchFor($strPattern)
 	{
-//		$objFilterRule = new MetaModelFilterRuleTags($this, $strPattern);
-//		return $objFilterRule->getMatchingIds();
-
-		return array();
+		$objFilterRule = new FilterRuleLinkedSelect($this, $strPattern);
+		return $objFilterRule->getMatchingIds();
 	}
 
 	/////////////////////////////////////////////////////////////////
