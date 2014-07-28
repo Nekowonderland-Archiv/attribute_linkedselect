@@ -57,30 +57,23 @@ class FilterRuleLinkedSelect extends FilterRule
 	{
 		$strTableNameId  = $this->objAttribute->get('mm_table');
 		$strColNameId    = 'id';
-		$strColNameAlias = $this->objAttribute->get('mm_displayedValue');
 
-		$arrValues = explode(',', $this->value);
+		$arrValues = is_array($this->value) ? $this->value : explode(',', $this->value);
 
 		$objDB = \Database::getInstance();
 
-		if ($strColNameAlias)
-		{
-			$objSelectIds = $objDB
-				->prepare(sprintf(
-					'SELECT %s FROM %s WHERE %s IN (%s)',
+		$objSelectIds = $objDB
+			->prepare(
+				sprintf('SELECT %1$s FROM %2$s WHERE %1$s IN (%3$s)',
 					$strColNameId,
 					$strTableNameId,
-					$strColNameAlias,
 					implode(',', array_fill(0, count($arrValues), '?'))
-				))
-				->execute($arrValues);
+				)
+			)
+			->execute($arrValues);
 
-			$arrValues = $objSelectIds->fetchEach($strColNameId);
-		}
-		else
-		{
-			$arrValues = array_map('intval', $arrValues);
-		}
+		$arrValues = $objSelectIds->fetchEach($strColNameId);
+
 		return $arrValues;
 	}
 
