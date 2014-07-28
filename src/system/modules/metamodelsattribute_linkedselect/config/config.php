@@ -22,3 +22,5 @@ $GLOBALS['METAMODELS']['attributes']['linkedselect'] = array
 
 $GLOBALS['TL_EVENTS'][\ContaoCommunityAlliance\Contao\EventDispatcher\Event\CreateEventDispatcherEvent::NAME][] =
 	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute::registerEvents';
+
+$GLOBALS['METAMODELS']['filters']['select']['attr_filter'][] = 'linkedselect';
