@@ -149,12 +149,12 @@ class LinkedSelect extends MetaModelAttributeHybrid
 	 */
 	public function getFilterOptions($arrIds, $usedOnly, &$arrCount = null)
 	{
-		$strMMName			 = $this->get('mm_table');
-		$strDisplayedValue	 = $this->get('mm_displayedValue');
-		$strSortingValue	 = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
-		$intFilterId		 = $this->get('mm_filter');
-		$arrFilterParams   = (array) $this->get('mm_filterparams');
-		$objMetaModel      = MetaModelFactory::byTableName($strMMName);
+		$strMMName           = $this->get('mm_table');
+		$strDisplayedValue   = $this->get('mm_displayedValue');
+		$strSortingValue     = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
+		$intFilterId         = $this->get('mm_filter');
+		$arrFilterParams     = (array) $this->get('mm_filterparams');
+		$objMetaModel        = MetaModelFactory::byTableName($strMMName);
 
 		$arrReturn = array();
 
