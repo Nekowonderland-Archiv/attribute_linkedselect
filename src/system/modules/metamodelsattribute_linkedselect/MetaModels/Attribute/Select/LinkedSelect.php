@@ -237,7 +237,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 
 				$arrUsedValues = array_filter($arrUsedValues, function($strValue){return !empty($strValue);});
 
-				$objFilter->addFilterRule(new StaticIdList($arrUsedValues));
+				$objFilter->addRules(new StaticIdList($arrUsedValues));
 			}
 
 			$objItems = $objMetaModel->findByFilter($objFilter, $strSortingValue);
