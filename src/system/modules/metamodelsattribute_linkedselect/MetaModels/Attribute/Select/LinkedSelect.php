@@ -221,9 +221,23 @@ class LinkedSelect extends MetaModelAttributeHybrid
 				$objFilter->addFilterRule(new StaticIdList($arrIds));
 			}
 
+			// Get only the used ones.
 			if($usedOnly)
 			{
-				// ToDo: ADD
+				$strSQL = sprintf(
+					'SELECT %2$s FROM %1$s GROUP BY %2$s',
+					$this->getMetaModel()->getTableName(),  //1
+					$strColName  //2
+				);
+
+				$arrUsedValues = \Database::getInstance()
+					->prepare($strSQL)
+					->execute()
+					->fetchEach($strColName);
+
+				$arrUsedValues = array_filter($arrUsedValues, function($strValue){return !empty($strValue);});
+
+				$objFilter->addFilterRule(new StaticIdList($arrUsedValues));
 			}
 
 			$objItems = $objMetaModel->findByFilter($objFilter, $strSortingValue);
