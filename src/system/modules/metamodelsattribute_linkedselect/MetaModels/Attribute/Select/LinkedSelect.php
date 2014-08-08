@@ -149,12 +149,13 @@ class LinkedSelect extends MetaModelAttributeHybrid
 	 */
 	public function getFilterOptions($arrIds, $usedOnly, &$arrCount = null)
 	{
-		$strMMName         = $this->get('mm_table');
-		$strDisplayedValue = $this->get('mm_displayedValue');
-		$strSortingValue   = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
-		$intFilterId       = $this->get('mm_filter');
-		$arrFilterParams   = (array) $this->get('mm_filterparams');
-		$objMetaModel      = MetaModelFactory::byTableName($strMMName);
+		$strMMName           = $this->get('mm_table');
+		$strDisplayedValue   = $this->get('mm_displayedValue');
+		$strSortingValue     = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
+		$intFilterId         = $this->get('mm_filter');
+		$strColName          = $this->get('colname');
+		$arrFilterParams     = (array) $this->get('mm_filterparams');
+		$objMetaModel        = MetaModelFactory::byTableName($strMMName);
 
 		$arrReturn = array();
 
@@ -216,20 +217,26 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			}
 
 			// Add some more filters.
-			if($arrIds && is_array($arrIds))
-			{
-				$objFilter->addRules(new StaticIdList($arrIds));
-			}
-
-			// Get only the used ones.
 			if($usedOnly)
 			{
-				$strSQL = sprintf(
-					'SELECT %2$s FROM %1$s GROUP BY %2$s',
-					$this->getMetaModel()->getTableName(),  //1
-					$strColName  //2
-				);
-
+				if(empty($arrIds))
+				{
+					$strSQL = sprintf(
+						'SELECT %2$s FROM %1$s GROUP BY %2$s',
+						$this->getMetaModel()->getTableName(),  //1
+						$strColName  //2
+					);
+				}
+				else
+				{
+					$strSQL = sprintf(
+						'SELECT %2$s FROM %1$s WHERE id IN (\'%3$s\') GROUP BY %2$s',
+						$this->getMetaModel()->getTableName(),  //1
+						$strColName,  //2
+						implode("', '", $arrIds)
+					);
+				}
+				
 				$arrUsedValues = \Database::getInstance()
 					->prepare($strSQL)
 					->execute()
@@ -238,6 +245,10 @@ class LinkedSelect extends MetaModelAttributeHybrid
 				$arrUsedValues = array_filter($arrUsedValues, function($strValue){return !empty($strValue);});
 
 				$objFilter->addRules(new StaticIdList($arrUsedValues));
+			}
+			else if($arrIds && is_array($arrIds))
+			{
+				$objFilter->addFilterRule(new StaticIdList($arrIds));
 			}
 
 			$objItems = $objMetaModel->findByFilter($objFilter, $strSortingValue);
