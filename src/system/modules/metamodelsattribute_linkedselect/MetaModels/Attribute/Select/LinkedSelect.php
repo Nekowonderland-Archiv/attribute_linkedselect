@@ -156,6 +156,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 		$strColName          = $this->get('colname');
 		$arrFilterParams     = (array) $this->get('mm_filterparams');
 		$objMetaModel        = MetaModelFactory::byTableName($strMMName);
+		$strColName          = $this->get('colname');
 
 		$arrReturn = array();
 
