@@ -358,8 +358,18 @@ class LinkedSelect extends MetaModelAttributeHybrid
 				}
 				else if (is_array($arrValue))
 				{
-					$arrValues = array_values($arrValue);
-					$objDB->prepare($strQuery)->execute($arrValues[0], $intItemId);
+					foreach($arrValue as $mixValues)
+					{
+						if(is_array($mixValues) && array_key_exists('id', $mixValues))
+						{
+							$objDB->prepare($strQuery)->execute($mixValues['id'], $intItemId);
+						}
+						else
+						{
+							$arrValues = array_values($arrValue);
+							$objDB->prepare($strQuery)->execute($arrValues[0], $intItemId);
+						}
+					}
 				}
 				else
 				{
