@@ -17,6 +17,7 @@
 
 namespace MetaModels\Filter\Rules;
 
+use MetaModels\Attribute\LinkedSelect\LinkedSelect;
 use MetaModels\Filter\FilterRule;
 use MetaModels\Attribute\IAttribute;
 use MetaModels\Attribute\Select\Select;
@@ -40,7 +41,7 @@ class FilterRuleLinkedSelect extends FilterRule
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct(Select $objAttribute, $strValue)
+	public function __construct(LinkedSelect $objAttribute, $strValue)
 	{
 		parent::__construct();
 
