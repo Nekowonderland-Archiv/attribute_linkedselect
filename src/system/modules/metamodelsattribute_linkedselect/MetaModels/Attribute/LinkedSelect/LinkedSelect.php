@@ -14,12 +14,13 @@
  * @filesource
  */
 
-namespace MetaModels\Attribute\Select;
+namespace MetaModels\Attribute\LinkedSelect;
 
 use MetaModels\Attribute\AbstractHybrid as MetaModelAttributeHybrid;
 use MetaModels\Filter\Rules\FilterRuleLinkedSelect;
 use MetaModels\Filter\Rules\StaticIdList;
 use MetaModels\Filter\Setting\Factory as FilterSettingFactory;
+use MetaModels\IMetaModel;
 use MetaModels\Render\Template as MetaModelTemplate;
 use MetaModels\Factory as MetaModelFactory;
 
@@ -31,6 +32,26 @@ use MetaModels\Factory as MetaModelFactory;
  */
 class LinkedSelect extends MetaModelAttributeHybrid
 {
+	/**
+	 * @var IMetaModel
+	 */
+	protected $objLinkedMetaModel;
+
+	/**
+	 * Retrieve the linked MetaModel instance.
+	 *
+	 * @return IMetaModel
+	 */
+	protected function getLinkedMetaModel()
+	{
+		if (empty($this->objLinkedMetaModel))
+		{
+			$strMMName = $this->get('mm_table');
+			$this->objLinkedMetaModel = MetaModelFactory::byTableName($strMMName);
+		}
+
+		return $this->objLinkedMetaModel;
+	}
 
 	/**
 	 * when rendered via a template, this returns the values to be stored in the template.
@@ -102,7 +123,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 			$arrFieldDef['inputType'] = 'select';
 		}
 
-		$arrFieldDef['options'] = $this->getFilterOptions(null, false);
+		// $arrFieldDef['options'] = $this->getFilterOptions(null, false);
 		return $arrFieldDef;
 	}
 
@@ -149,17 +170,15 @@ class LinkedSelect extends MetaModelAttributeHybrid
 	 */
 	public function getFilterOptions($arrIds, $usedOnly, &$arrCount = null)
 	{
-		$strMMName           = $this->get('mm_table');
 		$strDisplayedValue   = $this->get('mm_displayedValue');
 		$strSortingValue     = $this->get('mm_sorting') ? $this->get('mm_sorting') : 'id';
 		$intFilterId         = $this->get('mm_filter');
 		$strColName          = $this->get('colname');
 		$arrFilterParams     = (array) $this->get('mm_filterparams');
-		$objMetaModel        = MetaModelFactory::byTableName($strMMName);
 
 		$arrReturn = array();
 
-		if ($strMMName && $objMetaModel && $strDisplayedValue)
+		if ($this->getLinkedMetaModel() && $strDisplayedValue)
 		{
 			// Change language.
 			if (TL_MODE == 'BE')
@@ -168,12 +187,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 				$GLOBALS['TL_LANGUAGE'] = $this->getMetaModel()->getActiveLanguage();
 			}
 
-			if($objMetaModel == null)
-			{
-				return $arrReturn;
-			}
-
-			$objFilter    = $objMetaModel->getEmptyFilter();
+			$objFilter    = $this->getLinkedMetaModel()->getEmptyFilter();
 
 			// Set Filter and co.
 			$objFilterSettings = FilterSettingFactory::byId($intFilterId);
@@ -244,14 +258,14 @@ class LinkedSelect extends MetaModelAttributeHybrid
 
 				$arrUsedValues = array_filter($arrUsedValues, function($strValue){return !empty($strValue);});
 
-				$objFilter->addRules(new StaticIdList($arrUsedValues));
+				$objFilter->addFilterRule(new StaticIdList($arrUsedValues));
 			}
 			else if($arrIds && is_array($arrIds))
 			{
 				$objFilter->addFilterRule(new StaticIdList($arrIds));
 			}
 
-			$objItems = $objMetaModel->findByFilter($objFilter, $strSortingValue);
+			$objItems = $this->getLinkedMetaModel()->findByFilter($objFilter, $strSortingValue);
 
 			// Reset language.
 			if (TL_MODE == 'BE')
@@ -302,7 +316,7 @@ class LinkedSelect extends MetaModelAttributeHybrid
 		$arrReturn         = array();
 
 		// Get data from MM.
-		$objMetaModel = MetaModelFactory::byTableName($strMMName);
+		$objMetaModel = $this->getLinkedMetaModel();
 
 		if ($strMMName && $objMetaModel && $strDisplayedValue)
 		{
