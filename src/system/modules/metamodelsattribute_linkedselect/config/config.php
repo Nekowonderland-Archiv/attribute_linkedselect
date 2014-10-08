@@ -14,11 +14,14 @@
  * @filesource
  */
 
-$GLOBALS['METAMODELS']['attributes']['linkedselect'] = array
-(
-	'class' => 'MetaModels\Attribute\Select\LinkedSelect',
-	'image' => 'system/modules/metamodelsattribute_linkedselect/html/select.png'
-);
+//$GLOBALS['METAMODELS']['attributes']['linkedselect'] = array
+//(
+//	'class' => 'MetaModels\Attribute\LinkedSelect\LinkedSelect',
+//	'image' => 'system/modules/metamodelsattribute_linkedselect/html/select.png'
+//);
+
+$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'MetaModels\Attribute\LinkedSelect\AttributeTypeFactory';
+$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'MetaModels\DcGeneral\Events\MetaModels\LinkedSelect\BackendSubscriber';
 
 $GLOBALS['TL_EVENTS'][\ContaoCommunityAlliance\Contao\EventDispatcher\Event\CreateEventDispatcherEvent::NAME][] =
 	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute::registerEvents';
