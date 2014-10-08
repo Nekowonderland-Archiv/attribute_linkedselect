@@ -21,7 +21,9 @@
  */
 ClassLoader::addClasses(array
 (
-	'MetaModels\Attribute\Select\LinkedSelect'                                   => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/Select/LinkedSelect.php',
+	'MetaModels\Attribute\LinkedSelect\AttributeTypeFactory'                     => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/LinkedSelect/AttributeTypeFactory.php',
+	'MetaModels\Attribute\LinkedSelect\LinkedSelect'                             => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Attribute/LinkedSelect/LinkedSelect.php',
+	'MetaModels\DcGeneral\Events\MetaModels\LinkedSelect\BackendSubscriber'      => 'system/modules/metamodelsattribute_linkedselect/MetaModels/DcGeneral/Events/MetaModels/LinkedSelect/BackendSubscriber.php',
 	'MetaModels\DcGeneral\Events\Table\Attribute\LinkedSelect\PropertyAttribute' => 'system/modules/metamodelsattribute_linkedselect/MetaModels/DcGeneral/Events/Table/Attribute/LinkedSelect/PropertyAttribute.php',
 	'MetaModels\Filter\Rules\FilterRuleLinkedSelect'                             => 'system/modules/metamodelsattribute_linkedselect/MetaModels/Filter/Rules/FilterRuleLinkedSelect.php',
 ));
