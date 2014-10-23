@@ -18,8 +18,8 @@
 namespace MetaModels\Filter\Rules;
 
 use MetaModels\Filter\FilterRule;
-use MetaModels\Attribute\IAttribute;
 use MetaModels\Attribute\Select\Select;
+use MetaModels\Attribute\Select\LinkedSelect;
 
 /**
  * This is the MetaModelFilterRule class for handling select fields.
@@ -40,7 +40,7 @@ class FilterRuleLinkedSelect extends FilterRule
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct(Select $objAttribute, $strValue)
+	public function __construct(LinkedSelect $objAttribute, $strValue)
 	{
 		parent::__construct();
 
